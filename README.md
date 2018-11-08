@@ -4,6 +4,7 @@
 ## Planning de developpement
 
 * day2 11_02 : Plannification du developpment de l'application : DONE
+-> petit raf
 
 * day3 11_08 : Definition du modele de donnee + mise en place d'une page avec une application vue
 * day4 11_09 : Conception du design tel et ordi
@@ -19,6 +20,7 @@
 
 
 ## Definition des pages/fonctionnalitée
+src :  https://docs.google.com/document/d/1YKTvSJMImW8C8NUyoamHW5LekSkQk2GPOpb42NyTs1A/edit
 
 Utilisateur :
 * Fiche utilisateur (date de naissance, adresse, numéros de téléphone, adresse email)
@@ -34,7 +36,16 @@ Responsable du projet :
 * Acces aux compteurs pour ses salariés, filtrer les compteurs et les salariés : ( Solde d’annualisation - Solde de congés - Solde d’absence (en heures et en jours), avec le détail des motifs d’absence)
 * pouvoir imprimer (cf document)
 * traiter les demandes des salariés
-* [a compléter : https://docs.google.com/document/d/1YKTvSJMImW8C8NUyoamHW5LekSkQk2GPOpb42NyTs1A/edit]
+* Pouvoir modifier les demandes du salarié
+* Pouvoir etablir un planning previsionnel a l'année
+* Pouvoir ajouter les jours fériés sur un planning
+
+DRH 
+* Accéder au logs de l'application
+* Parametrer les motifs d'absence
+
+
+
 
 
 
