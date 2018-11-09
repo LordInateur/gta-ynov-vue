@@ -2,7 +2,7 @@
   <div id="app">
     <!-- debut -->
 
-    <MyNavbar/>
+    <MyNavbar :isNotLogin="isNotLogin()" />
 
     <!-- fin -->
 <!--     
@@ -30,6 +30,9 @@
     },
     methods : {
       //logout : this.$root.logout()
+      isNotLogin : function (){
+        return !this.$root.isLogged()
+      }
     },
     components : {
       MyNavbar

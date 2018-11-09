@@ -15,7 +15,7 @@ export default {
     LoginForm
   },
   created : function() {
-    console.log("coucou");
+    console.log("login created");
   }
 };
 

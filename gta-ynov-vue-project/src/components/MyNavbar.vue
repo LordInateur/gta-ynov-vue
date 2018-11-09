@@ -4,7 +4,7 @@
 
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-      <b-navbar-brand href="#">NavBar</b-navbar-brand>
+      <router-link to="/"><b-navbar-brand >NavBar</b-navbar-brand></router-link>
 
       <b-collapse is-nav id="nav_collapse">
 
@@ -16,9 +16,9 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
 
-          <div>
+          <b-nav-form >
             <b-form-select size="sm" v-model="lang" :options="langs"/>
-          </div>
+          </b-nav-form >
 
           <b-nav-form >
             <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Search"/>
@@ -28,7 +28,7 @@
           <b-nav-item-dropdown right v-if="isNotLogin">
             <!-- Using button-content slot -->
             <template slot="button-content">
-              <em>User</em>
+              <em>{{userName}}</em>
             </template>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
             <b-dropdown-item href="#" v-on:click="logout()">Signout</b-dropdown-item>
@@ -57,10 +57,43 @@
       }
     },
     computed : {
-      isNotLogin : function (){
-        return this.$router.currentRoute.name != 'login'
+      userName : function(){
+        if(this.$root.isLogged()){
+          return this.$root.getLoggedUser().pseudo
+        }else{
+          return "User"
+        }
+      },
+      isNotLogin : function(){
+        console.log("NavBar isNotLogin computed : " + !this.$root.isLogged())
+        return !this.$root.isLogged();
       } 
-    }
+    },
+    created : function(){
+      console.log("NavBar created")
+    },
+    mounted : function(){
+      console.log("isNotLogin : " + this.isNotLogin)
+    },
+    updated : function(){
+      console.log("NavBar updated")
+    },
+    beforeRouteUpdate : function(){
+      console.log("NavBar beforeRouteUpdate")
+    },
+    methods : {
+      logout : function (){
+        console.log("logout")
+        this.$root.logout()
+        //this.isNotLogin = this.$root.isLogged()
+        this.$router.push('login')
+      }/*,
+      isNotLogin : function (){
+        console.log("routeName : " + this.$router.currentRoute.name)
+        return this.$root.isLogged()
+      }*/
+    },
+    props : {}
   };
 </script>
 

@@ -16,12 +16,14 @@ export default {
     HelloWorld
   },
   created : function() {
+    console.log("Home created")
     if(!this.$root.isLogged()){
       this.$router.push('login')
     }
   },
   mounted : function () {
-    console.log(this.$root.getData())
+  },
+  updated : function (){
   }
 };
 
