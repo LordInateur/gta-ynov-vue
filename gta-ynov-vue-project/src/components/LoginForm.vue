@@ -50,7 +50,7 @@
           console.log("user logged")
         //zconsole.log(user)
           this.$root.user = user
-          this.$root.isLogged_var = true
+          this.$root.isLoggin = true
           this.$router.push('/')
         }
       }

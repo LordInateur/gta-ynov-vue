@@ -8,7 +8,8 @@
 
       <b-collapse is-nav id="nav_collapse">
 
-        <b-navbar-nav v-if="isLogin">
+        <b-navbar-nav v-if="this.$root.isLoggin">
+          <b-nav-item href="#" v-on:click="resetData()" v-if="isAdmin()">Reset Data</b-nav-item>
           <b-nav-item href="#">Link</b-nav-item>
           <b-nav-item href="#" disabled>Disabled</b-nav-item>
         </b-navbar-nav>
@@ -25,7 +26,7 @@
             <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
           </b-nav-form>
 
-          <b-nav-item-dropdown right v-if="isLogin">
+          <b-nav-item-dropdown right v-if="this.$root.isLoggin">
             <!-- Using button-content slot -->
             <template slot="button-content">
               <em>{{userName}}</em>
@@ -59,6 +60,8 @@
     computed : {
       userName : function(){
         if(this.$root.isLogged()){
+          console.log("getLoggedUser : ")
+          console.log(this.$root.getLoggedUser())
           return this.$root.getLoggedUser().pseudo
         }else{
           return "User"
@@ -71,9 +74,13 @@
     },
     created : function(){
       console.log("NavBar created")
+      this.$root.isLoggin = this.$root.isLogged()
     },
     mounted : function(){
       console.log("NavBar mounted")
+    },
+    beforeUpdate : function(){
+      console.log("NavBar beforeUpdate")
     },
     updated : function(){
       console.log("NavBar updated")
@@ -86,12 +93,16 @@
         console.log("logout")
         this.$root.logout()
         //this.isNotLogin = this.$root.isLogged()
+        this.$root.isLoggin = false
         this.$router.push('login')
-      }/*,
-      isNotLogin : function (){
-        console.log("routeName : " + this.$router.currentRoute.name)
-        return this.$root.isLogged()
-      }*/
+      },
+      resetData : function (){
+        this.$root.resetData()
+      },
+      isAdmin : function(){
+        console.log(this.$root.getLoggedUser().roles)
+        return this.$root.getLoggedUser().roles.indexOf('ADMIN') > -1
+      }
     },
     props : {}
   };
