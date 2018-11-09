@@ -29,9 +29,9 @@
           <b-nav-item-dropdown right v-if="this.$root.isLoggin">
             <!-- Using button-content slot -->
             <template slot="button-content">
-              <em>{{userName}}</em>
+              <em>{{this.$root.getLoggedUser().pseudo}}</em>
             </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item to="/profil" >Profile</b-dropdown-item>
             <b-dropdown-item href="#" v-on:click="logout()">Signout</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -58,15 +58,6 @@
       }
     },
     computed : {
-      userName : function(){
-        if(this.$root.isLogged()){
-          console.log("getLoggedUser : ")
-          console.log(this.$root.getLoggedUser())
-          return this.$root.getLoggedUser().pseudo
-        }else{
-          return "User"
-        }
-      },
       isLogin : function(){
         console.log("NavBar isLogin computed : " + this.$root.isLogged())
         return this.$root.isLogged();
@@ -75,18 +66,6 @@
     created : function(){
       console.log("NavBar created")
       this.$root.isLoggin = this.$root.isLogged()
-    },
-    mounted : function(){
-      console.log("NavBar mounted")
-    },
-    beforeUpdate : function(){
-      console.log("NavBar beforeUpdate")
-    },
-    updated : function(){
-      console.log("NavBar updated")
-    },
-    beforeRouteUpdate : function(){
-      console.log("NavBar beforeRouteUpdate")
     },
     methods : {
       logout : function (){
@@ -98,9 +77,9 @@
       },
       resetData : function (){
         this.$root.resetData()
+        alert("Data have been reseted")
       },
       isAdmin : function(){
-        console.log(this.$root.getLoggedUser().roles)
         return this.$root.getLoggedUser().roles.indexOf('ADMIN') > -1
       }
     },

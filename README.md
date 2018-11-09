@@ -8,6 +8,7 @@
 
 * day3 11_08 : Definition du modele de donnee + mise en place d'une page avec une application vue
 * day4 11_09 : Conception du design tel et ordi
+-> page login OK, creation page profil.
 
 * day5 11_15 : Creation des methodes de gestion de donnée
 * day6 11_16 : Creation des tests ( et/ou rattrapage du retard planning)

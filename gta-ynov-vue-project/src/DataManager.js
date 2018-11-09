@@ -51,7 +51,18 @@ let checkData = ()=> {
         login : "admin", 
         password : "admin",
         pseudo : "Admin",
-        roles : ['USER', 'TEAM_LEADER', 'DIRECTEUR_DES_RESSOURCES_HUMAINES', 'ADMIN' ],
+        firstName : "Matthieu",
+        lastName : "Fournier",
+        ddn : "1996/06/10",
+        tel : "00 11 22 33 44",
+        addresse : {
+          cp : "44200",
+          ville : "Nantes",
+          rue : "XX rue de la rue",
+          complement : "12em etage"
+        },
+        mail : "user@domain.com",
+        roles : ['USER', 'TEAM_LEADER', 'DIRECTEUR_DES_RESSOURCES_HUMAINES', 'ADMIN'],
         contrats : [{
           dateDebut : "2018/11/08",
           dateFin : "2018/11/16",
@@ -60,7 +71,18 @@ let checkData = ()=> {
       },{
         login : "user", 
         password : "user",
-        pseudo : "User",
+        pseudo : "BenjaminBarsseur",
+        firstName : "Benjamin",
+        lastName : "Brasseur",
+        ddn : "1996/06/10",
+        tel : "00 11 22 33 44",
+        addresse : {
+          cp : "44200",
+          ville : "Nantes",
+          rue : "XX rue de la rue",
+          complement : "12em etage"
+        },
+        mail : "user@domain.com",
         roles : ['USER'],
         contrats : [{
           dateDebut : "2018/11/08",
