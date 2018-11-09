@@ -1,48 +1,58 @@
 <template>
   <div class="profil">
-
-    <div class="container">
       <div class="row main">
         <div class="main-login main-center">
         <h1>Profil</h1>
-          <form class="" >
+        <h3>{{user.pseudo}} - {{user.firstName}} {{user.lastName}}</h3>
+          <form class="" v-on:submit.prevent="doSubmit">
             
-            <div class="form-group">
-              <label for="name" class="cols-sm-2 control-label">Your first name</label>
+            <div class="form-group" v-if="canEditName">
+              <label for="name" class="cols-sm-2 control-label">First name</label>
               <div class="cols-sm-10">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                  <input type="text" class="form-control" name="name" id="name" placeholder="Enter your First Name"/>
+                  <input type="text" class="form-control" v-model="formUser.firstName" placeholder="Enter your First Name"/>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group" v-if="canEditName">
+              <label for="name" class="cols-sm-2 control-label">Last name</label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                  <input type="text" class="form-control" v-model="formUser.lastName" placeholder="Enter your Last Name"/>
                 </div>
               </div>
             </div>
             
             <div class="form-group">
-              <label for="name" class="cols-sm-2 control-label">Your last name</label>
+              <label for="name" class="cols-sm-2 control-label">Roles : <span v-if="!isAdmin">{{user.roles}}</span></label>
               <div class="cols-sm-10">
-                <div class="input-group">
+                <div class="input-group" v-if="isAdmin">
                   <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                  <input type="text" class="form-control" name="name" id="name" placeholder="Enter your Last Name"/>
+                  <input type="text" class="form-control" v-model="formUser_roles" placeholder="Enter your First Name"/>
                 </div>
+                
               </div>
             </div>
             
             <div class="form-group">
-              <label for="name" class="cols-sm-2 control-label">Your pseudo</label>
+              <label for="name" class="cols-sm-2 control-label">Pseudo</label>
               <div class="cols-sm-10">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                  <input type="text" class="form-control" name="name" id="name" placeholder="Enter your Pseudo"/>
+                  <input type="text" class="form-control" v-model="formUser.pseudo"  placeholder="Enter your Pseudo"/>
                 </div>
               </div>
             </div>
 
             <div class="form-group">
-              <label for="email" class="cols-sm-2 control-label">Your Email</label>
+              <label for="email" class="cols-sm-2 control-label">Email</label>
               <div class="cols-sm-10">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                  <input type="mail" class="form-control" name="email" id="email" placeholder="Enter your Email"/>
+                  <input type="mail" class="form-control" v-model="formUser.mail"  placeholder="Enter your Email"/>
                 </div>
               </div>
             </div>
@@ -52,35 +62,35 @@
               <div class="cols-sm-10">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                  <input type="text" class="form-control" name="username" id="username" placeholder="Enter Phone Number"/>
+                  <input type="tel" class="form-control" v-model="formUser.tel"  placeholder="Enter Phone Number"/>
                 </div>
               </div>
             </div>
 
             <div class="form-group">
-              <label for="password" class="cols-sm-2 control-label">Your Adresse</label>
+              <label for="password" class="cols-sm-2 control-label">Adresse</label>
               <div class="cols-sm-10">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                  <input type="password" class="form-control" name="password" id="password" placeholder="Enter your City"/>
+                  <input type="text" class="form-control" v-model="formUser.addresse.ville"  placeholder="Enter your City"/>
                 </div>
               </div>
               <div class="cols-sm-10">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                  <input type="password" class="form-control" name="password" id="password" placeholder="Enter your Code Postal"/>
+                  <input type="text" class="form-control"  v-model="formUser.addresse.cp" placeholder="Enter your Code Postal"/>
                 </div>
               </div>
               <div class="cols-sm-10">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                  <input type="password" class="form-control" name="password" id="password" placeholder="Enter your Street"/>
+                  <input type="text" class="form-control"  v-model="formUser.addresse.rue"  placeholder="Enter your Street"/>
                 </div>
               </div>
               <div class="cols-sm-10">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                  <input type="password" class="form-control" name="password" id="password" placeholder="Something else ?"/>
+                  <input type="text" class="form-control"  v-model="formUser.addresse.complement" placeholder="Something else ?"/>
                 </div>
               </div>
             </div>
@@ -90,19 +100,18 @@
               <div class="cols-sm-10">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                  <input type="date" class="form-control" name="confirm" id="confirm" placeholder="Confirm your Date de Naissance"/>
+                  <input type="date" class="form-control"  v-model="formUser.ddn" placeholder="Confirm your Date de Naissance"/>
                 </div>
               </div>
             </div>
 
             <div class="form-group ">
-              <h2>-!- Auto-saveded -!-</h2>
+              <h2><input id="button" type="submit" value="Save Personal Data"></h2>
             </div>
             
           </form>
         </div>
       </div>
-    </div>
 
   </div>
 </template>
@@ -116,24 +125,41 @@ export default {
   },
   created : function() {
     console.log("profil created");
-  }
+    this.user = this.$root.getLoggedUser()
+    this.formUser = this.$root.getLoggedUser()
+    this.formUser_roles = JSON.stringify(this.user.roles)
+    this.canEditName = this.$root.isDRH(this.user) ||  this.$root.isAdmin(this.user)
+    this.isAdmin = this.$root.isAdmin(this.user)
+  },
+  data : function(){
+    return {
+      user : {},
+      formUser : {},
+      canEditName : false,
+      isAdmin : false,
+      formUser_roles : ""
+    }
+  },
+  methods : {
+    doSubmit : function (){
+      this.user = JSON.parse(JSON.stringify(this.formUser))
+      this.user.roles = JSON.parse(this.formUser_roles)
+
+      this.$root.saveUser(this.user)
+      this.user = this.$root.getLoggedUser()
+      alert("Personal Data Saved")
+    }
+  },
+  computed : {}
 };
 </script>
 
 
 
 <style scoped>
-#playground-container {
-    height: 500px;
-    overflow: hidden !important;
-    -webkit-overflow-scrolling: touch;
-}
-body, html{
-     height: 100%;
-  background-repeat: no-repeat;
-  background:url(https://i.ytimg.com/vi/4kfXjatgeEU/maxresdefault.jpg);
-  font-family: 'Oxygen', sans-serif;
-      background-size: cover;
+
+.profil {
+  width: 100%;
 }
 
 .main{
@@ -206,11 +232,13 @@ padding: 8px 12px !important;
     background: -ms-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
     background: linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#eeeeee', GradientType=0);
+    font-size: 20px;
 }
 .main-center{
   margin-top: 30px;
   margin: 0 auto;
-  max-width: 400px;
+  min-width: 40%;
+  max-width: 70%;
     padding: 10px 40px;
   background:#009edf;
       color: #FFF;
@@ -225,13 +253,5 @@ span.input-group-addon i {
     font-size: 17px;
 }
 
-.login-button{
-  margin-top: 5px;
-}
-
-.login-register{
-  font-size: 11px;
-  text-align: center;
-}
 
 </style>

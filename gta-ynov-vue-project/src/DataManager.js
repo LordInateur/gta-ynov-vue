@@ -11,7 +11,7 @@ let demandes = {
     title : 'Congé payé',
     jourPayer : true,
     dates : [
-      '2018/11/12'
+      '2018-11-12'
     ]
   },
   RECUPERATION : {
@@ -19,7 +19,7 @@ let demandes = {
     title : 'Récupération',
     jourPayer : true,
     dates : [
-      '2018/11/13'
+      '2018-11-13'
     ]
   },
   AMENAGEMENT_HORAIRE : {
@@ -27,7 +27,7 @@ let demandes = {
     title : 'Aménagment d\'horaire',
     jourPayer : true,
     dates : [
-      '2018/11/14'
+      '2018-11-14'
     ]
   }, 
   ABSENCE : {
@@ -35,7 +35,7 @@ let demandes = {
     title : 'Absence',
     jourPayer : false,
     dates : [
-      '2018/11/15'
+      '2018-11-15'
     ]
   }
 }
@@ -47,13 +47,14 @@ let setData = a => localStorage.setItem('data', JSON.stringify(a))
 let checkData = ()=> {
   if (getData() == null){
     setData({
-      user : [{
+      users : [{
+        id : 0,
         login : "admin", 
         password : "admin",
         pseudo : "Admin",
         firstName : "Matthieu",
         lastName : "Fournier",
-        ddn : "1996/06/10",
+        ddn : "1996-06-10",
         tel : "00 11 22 33 44",
         addresse : {
           cp : "44200",
@@ -64,17 +65,18 @@ let checkData = ()=> {
         mail : "user@domain.com",
         roles : ['USER', 'TEAM_LEADER', 'DIRECTEUR_DES_RESSOURCES_HUMAINES', 'ADMIN'],
         contrats : [{
-          dateDebut : "2018/11/08",
-          dateFin : "2018/11/16",
+          dateDebut : "2018-11-08",
+          dateFin : "2018-11-16",
           demandes : []
         }]
       },{
+        id : 1,
         login : "user", 
         password : "user",
         pseudo : "BenjaminBarsseur",
         firstName : "Benjamin",
         lastName : "Brasseur",
-        ddn : "1996/06/10",
+        ddn : "1996-06-10",
         tel : "00 11 22 33 44",
         addresse : {
           cp : "44200",
@@ -86,49 +88,49 @@ let checkData = ()=> {
         roles : ['USER'],
         contrats : [{
           dateDebut : "2018/11/08",
-          dateFin : "2018/11/16",
+          dateFin : "2018-11-16",
           demandes : [
           {
             id : 'CONGE_PAYE',
             title : 'Congé payé',
             jourPayer : true,
             dates : [
-              '2018/11/12'
+              '2018-11-12'
             ]
           },{
             id : 'RECUPERATION',
             title : 'Récupération',
             jourPayer : true,
             dates : [
-              '2018/11/13'
+              '2018-11-13'
             ]
           },{
             id : 'AMENAGEMENT_HORAIRE',
             title : 'Aménagment d\'horaire',
             jourPayer : true,
             dates : [
-              '2018/11/14'
+              '2018-11-14'
             ]
           },{
             id : 'ABSENCE',
             title : 'Absence',
             jourPayer : false,
             dates : [
-              '2018/11/15'
+              '2018-11-15'
             ]
           }]
         }]
-      }
-
-      ]
+      }]
     })
   }
 }
+
 export default {
   getData : () => getData(),
   setData : obj => setData(obj),
   resetData : ()=> {
     localStorage.removeItem('data')
+    sessionStorage.removeItem('user')
     checkData()
   },
   isLogged : ()=> sessionStorage.getItem('user')!=null,
@@ -137,10 +139,21 @@ export default {
   logout : ()=> sessionStorage.removeItem('user'),
   login : (login, password)=> {
     checkData()
-    let user = getData().user.find(e=>e.login == login && e.password == password)
+    let user = getData().users.find(e=>e.login == login && e.password == password)
     if(user != undefined){
       sessionStorage.setItem('user', JSON.stringify(user))
     }
     return user
-  }
+  },
+  saveUser : uUser => {
+    let data = getData()
+    let userIndex = data.users.map(function(user) { return user.id }).indexOf(uUser.id);
+    data.users[userIndex] = uUser
+    setData(data)
+
+    sessionStorage.setItem('user', JSON.stringify(uUser))
+  },
+  isAdmin : user=>user.roles.indexOf('ADMIN') > -1,
+  isDRH : user=>user.roles.indexOf('DIRECTEUR_DES_RESSOURCES_HUMAINES') > -1
+
 }
