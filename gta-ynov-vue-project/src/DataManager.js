@@ -113,6 +113,7 @@ export default {
   getLoggedUser : ()=> JSON.parse(sessionStorage.getItem('user')),
   logout : ()=> {
     isLogged = false;
+    console.log("datamanager -> isLogged : " + isLogged)
     return sessionStorage.removeItem('user')
   },
   login : (login, password)=> {
@@ -121,6 +122,7 @@ export default {
     if(user != undefined){
       isLogged = true;
       sessionStorage.setItem('user', JSON.stringify(user))
+      console.log("datamanager -> isLogged : " + isLogged)
     }
     return user
   }

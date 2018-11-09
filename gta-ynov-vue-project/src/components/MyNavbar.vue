@@ -8,7 +8,7 @@
 
       <b-collapse is-nav id="nav_collapse">
 
-        <b-navbar-nav v-if="isNotLogin">
+        <b-navbar-nav v-if="isLogin">
           <b-nav-item href="#">Link</b-nav-item>
           <b-nav-item href="#" disabled>Disabled</b-nav-item>
         </b-navbar-nav>
@@ -25,7 +25,7 @@
             <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
           </b-nav-form>
 
-          <b-nav-item-dropdown right v-if="isNotLogin">
+          <b-nav-item-dropdown right v-if="isLogin">
             <!-- Using button-content slot -->
             <template slot="button-content">
               <em>{{userName}}</em>
@@ -64,16 +64,16 @@
           return "User"
         }
       },
-      isNotLogin : function(){
-        console.log("NavBar isNotLogin computed : " + !this.$root.isLogged())
-        return !this.$root.isLogged();
+      isLogin : function(){
+        console.log("NavBar isLogin computed : " + this.$root.isLogged())
+        return this.$root.isLogged();
       } 
     },
     created : function(){
       console.log("NavBar created")
     },
     mounted : function(){
-      console.log("isNotLogin : " + this.isNotLogin)
+      console.log("NavBar mounted")
     },
     updated : function(){
       console.log("NavBar updated")
