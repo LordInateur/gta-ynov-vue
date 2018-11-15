@@ -18,8 +18,8 @@
         </div>
         <!-- Login Form -->
         <form v-on:submit.prevent="doSubmit">
-          <input type="mail" id="login" class="fadeIn second" name="login" placeholder="user@domain.com" v-model="login">
-          <input type="password" id="password" class="fadeIn third" name="password" placeholder="password" v-model="password">
+          <input type="mail" id="login" class="fadeIn second" name="login" placeholder="user@domain.com" v-model="login" required="true">
+          <input type="password" id="password" class="fadeIn third" name="password" placeholder="password" v-model="password" required="true">
           <input type="submit" class="fadeIn fourth" value="Log In">
         </form>
 

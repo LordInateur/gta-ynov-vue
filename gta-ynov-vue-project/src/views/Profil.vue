@@ -1,134 +1,177 @@
 <template>
   <div class="profil">
       <div class="row main">
-        <div class="main-login main-center">
-        <h1>Profil</h1>
-        <h3>{{user.pseudo}} - {{user.firstName}} {{user.lastName}}</h3>
-          <form class="" v-on:submit.prevent="doSubmit">
-            
-            <div class="form-group" v-if="canEditName">
-              <label for="name" class="cols-sm-2 control-label">First name</label>
-              <div class="cols-sm-10">
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                  <input type="text" class="form-control" v-model="formUser.firstName" placeholder="Enter your First Name"/>
-                </div>
-              </div>
-            </div>
-            
-            <div class="form-group" v-if="canEditName">
-              <label for="name" class="cols-sm-2 control-label">Last name</label>
-              <div class="cols-sm-10">
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                  <input type="text" class="form-control" v-model="formUser.lastName" placeholder="Enter your Last Name"/>
-                </div>
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label for="name" class="cols-sm-2 control-label">Roles : <span v-if="!isAdmin">{{user.roles}}</span></label>
-              <div class="cols-sm-10">
-                <div class="input-group" v-if="isAdmin">
-                  <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                  <input type="text" class="form-control" v-model="formUser_roles" placeholder="Enter your First Name"/>
-                </div>
-                
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label for="name" class="cols-sm-2 control-label">Pseudo</label>
-              <div class="cols-sm-10">
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                  <input type="text" class="form-control" v-model="formUser.pseudo"  placeholder="Enter your Pseudo"/>
-                </div>
-              </div>
+        <div class="col-xl-4" v-if="canEditName">
+          <div class="main-login main-center">
+            <h1> Rechercher </h1>
+            <input class="form-control" v-model="recherche" type="text"  placeholder="firstName, lastName, pseudo, mail"/>
+            <br>
+
+            <div v-if="rechercheResult.firstName.length > 0">
+              <h3>Find by FirstName :</h3>
+              <div v-for="fUser in rechercheResult.firstName">{{fUser.firstName}} {{fUser.lastName}} ( {{fUser.mail}} ) <img class="imgLoadUser" v-on:click="loadUser(fUser)" src="https://static.thenounproject.com/png/370577-200.png"></div>
             </div>
 
-            <div class="form-group">
-              <label for="email" class="cols-sm-2 control-label">Email</label>
-              <div class="cols-sm-10">
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                  <input type="mail" class="form-control" v-model="formUser.mail"  placeholder="Enter your Email"/>
-                </div>
-              </div>
+            <div v-if="rechercheResult.lastName.length > 0">
+              <h3>Find by LastName :</h3>
+              <div v-for="fUser in rechercheResult.lastName">{{fUser.firstName}} {{fUser.lastName}} ( {{fUser.mail}} )</div>
             </div>
 
-            <div class="form-group">
-              <label for="username" class="cols-sm-2 control-label">Phone number</label>
-              <div class="cols-sm-10">
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                  <input type="tel" class="form-control" v-model="formUser.tel"  placeholder="Enter Phone Number"/>
-                </div>
-              </div>
+            <div v-if="rechercheResult.pseudo.length > 0">
+              <h3>Find by Pseudo :</h3>
+              <div v-for="fUser in rechercheResult.pseudo">{{fUser.firstName}} {{fUser.lastName}} ( {{fUser.mail}} )</div>
             </div>
 
-            <div class="form-group">
-              <label for="password" class="cols-sm-2 control-label">Adresse</label>
-              <div class="cols-sm-10">
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                  <input type="text" class="form-control" v-model="formUser.addresse.ville"  placeholder="Enter your City"/>
-                </div>
-              </div>
-              <div class="cols-sm-10">
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                  <input type="text" class="form-control"  v-model="formUser.addresse.cp" placeholder="Enter your Code Postal"/>
-                </div>
-              </div>
-              <div class="cols-sm-10">
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                  <input type="text" class="form-control"  v-model="formUser.addresse.rue"  placeholder="Enter your Street"/>
-                </div>
-              </div>
-              <div class="cols-sm-10">
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                  <input type="text" class="form-control"  v-model="formUser.addresse.complement" placeholder="Something else ?"/>
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="confirm" class="cols-sm-2 control-label">Date de Naissance</label>
-              <div class="cols-sm-10">
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                  <input type="date" class="form-control"  v-model="formUser.ddn" placeholder="Confirm your Date de Naissance"/>
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group ">
-              <h2><input id="button" type="submit" value="Save Personal Data"></h2>
+            <div v-if="rechercheResult.mail.length > 0">
+              <h3>Find by Mail :</h3>
+              <div v-for="fUser in rechercheResult.mail">{{fUser.firstName}} {{fUser.lastName}} ( {{fUser.mail}} )</div>
             </div>
             
-          </form>
+          </div>
+        </div>
+        <div v-bind:class="{'col-xl-8': canEditName, 'main-login main-center': !canEditName}">
+          <div v-bind:class="{'main-login main-center': canEditName}">
+          <h1>Profil</h1>
+          <h3>{{user.pseudo}} - {{user.firstName}} {{user.lastName}}</h3>
+            <form class="" v-on:submit.prevent="doSubmit">
+              
+              <div class="form-group" v-if="canEditName">
+                <label for="name" class="cols-sm-2 control-label">First name</label>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" v-model="formUser.firstName" placeholder="Enter your First Name"/>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group" v-if="canEditName">
+                <label for="name" class="cols-sm-2 control-label">Last name</label>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" v-model="formUser.lastName" placeholder="Enter your Last Name" />
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="name" class="cols-sm-2 control-label">Roles</label>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                    <v-select id="roles" class="form-control" multiple :options="this.$root.getRoles()" v-model="formUser.roles" :disabled="!canEditName"></v-select>
+                  </div>
+                  
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="name" class="cols-sm-2 control-label">Pseudo</label>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" v-model="formUser.pseudo"  placeholder="Enter your Pseudo"  autocomplete="username"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="email" class="cols-sm-2 control-label">Email</label>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                    <input type="mail" class="form-control" v-model="formUser.mail"  placeholder="Enter your Email"/>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="password" class="cols-sm-2 control-label">Password</label>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                    <input type="password" class="form-control" v-model="user.password" placeholder="Enter your Password" autocomplete="current-password" />
+                  </div>
+                  
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="username" class="cols-sm-2 control-label">Phone number</label>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                    <input type="tel" class="form-control" v-model="formUser.tel"  placeholder="Enter Phone Number"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="password" class="cols-sm-2 control-label">Adresse</label>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" v-model="formUser.addresse.ville"  placeholder="Enter your City"/>
+                  </div>
+                </div>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control"  v-model="formUser.addresse.cp" placeholder="Enter your Code Postal"/>
+                  </div>
+                </div>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control"  v-model="formUser.addresse.rue"  placeholder="Enter your Street"/>
+                  </div>
+                </div>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control"  v-model="formUser.addresse.complement" placeholder="Something else ?"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="confirm" class="cols-sm-2 control-label">Date de Naissance</label>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <input type="date" class="form-control"  v-model="formUser.ddn" placeholder="Confirm your Date de Naissance"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group ">
+                <h2><input type="submit" value="Save Personal Data" class="my_button"><span v-if="canCreateUser"> - <input  class="my_button" type="button" value="Create new User" v-on:click="createUser()"></span></h2>
+              </div>
+              
+            </form>
+          </div>
         </div>
       </div>
-
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import vSelect from 'vue-select'
 
 export default {
   name: 'profil',
   components: {
+    vSelect
   },
   created : function() {
     console.log("profil created");
     this.user = this.$root.getLoggedUser()
     this.formUser = this.$root.getLoggedUser()
-    this.formUser_roles = JSON.stringify(this.user.roles)
     this.canEditName = this.$root.isDRH(this.user) ||  this.$root.isAdmin(this.user)
+    this.canCreateUser = this.$root.isDRH(this.user) ||  this.$root.isAdmin(this.user)
     this.isAdmin = this.$root.isAdmin(this.user)
   },
   data : function(){
@@ -136,21 +179,52 @@ export default {
       user : {},
       formUser : {},
       canEditName : false,
+      canCreateUser : false,
       isAdmin : false,
-      formUser_roles : ""
+      recherche : "",
+      rechercheResult : {
+        firstName : [],
+        lastName : [],
+        pseudo : [],
+        mail : []
+      }
     }
   },
   methods : {
     doSubmit : function (){
-      this.user = JSON.parse(JSON.stringify(this.formUser))
-      this.user.roles = JSON.parse(this.formUser_roles)
-
-      this.$root.saveUser(this.user)
-      this.user = this.$root.getLoggedUser()
+      this.$root.saveUser(this.formUser)
+      //this.user = this.$root.getLoggedUser()
       alert("Personal Data Saved")
+    },
+    createUser : function (){
+      if(this.formUser.mail != this.formUser.mail){
+        this.$root.createUser(this.formUser)
+        //this.user = this.$root.getLoggedUser()
+        alert("User Created")
+      }
+    },
+    loadUser : function(user){
+      this.user = user
+      this.formUser = user
     }
   },
-  computed : {}
+  computed : {},
+  watch : {
+    recherche : function (txt){
+      if(txt.length > 0){
+        console.log(txt)
+        this.rechercheResult = this.$root.findUser(txt, txt, txt, txt )
+        console.log(this.rechercheResult)
+      } else {
+        this.rechercheResult = {
+          firstName : [],
+          lastName : [],
+          pseudo : [],
+          mail : []
+        }
+      }
+    }
+  }
 };
 </script>
 
@@ -211,7 +285,7 @@ padding: 8px 12px !important;
     -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
     box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
 }
-#button {
+.my_button {
     border: 1px solid #ccc;
     margin-top: 28px;
     padding: 6px 12px;
@@ -253,5 +327,12 @@ span.input-group-addon i {
     font-size: 17px;
 }
 
+#roles  {
+  padding: 0px !important;
+}
+
+.imgLoadUser {
+  height: 1em;
+}
 
 </style>

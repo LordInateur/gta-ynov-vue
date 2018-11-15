@@ -4,7 +4,7 @@ Data Manager
 
 */
 
-let profils = ['USER', 'TEAM_LEADER', 'DIRECTEUR_DES_RESSOURCES_HUMAINES', 'ADMIN']
+let roles = ['USER', 'TEAM_LEADER', 'DIRECTEUR_DES_RESSOURCES_HUMAINES', 'ADMIN']
 let demandes = {
   CONGE_PAYE : {
     id : 'CONGE_PAYE',
@@ -49,7 +49,6 @@ let checkData = ()=> {
     setData({
       users : [{
         id : 0,
-        login : "admin", 
         password : "admin",
         pseudo : "Admin",
         firstName : "Matthieu",
@@ -62,7 +61,7 @@ let checkData = ()=> {
           rue : "XX rue de la rue",
           complement : "12em etage"
         },
-        mail : "user@domain.com",
+        mail : "admin@domain.com",
         roles : ['USER', 'TEAM_LEADER', 'DIRECTEUR_DES_RESSOURCES_HUMAINES', 'ADMIN'],
         contrats : [{
           dateDebut : "2018-11-08",
@@ -71,7 +70,6 @@ let checkData = ()=> {
         }]
       },{
         id : 1,
-        login : "user", 
         password : "user",
         pseudo : "BenjaminBarsseur",
         firstName : "Benjamin",
@@ -139,7 +137,7 @@ export default {
   logout : ()=> sessionStorage.removeItem('user'),
   login : (login, password)=> {
     checkData()
-    let user = getData().users.find(e=>e.login == login && e.password == password)
+    let user = getData().users.find(e=>e.mail == login && e.password == password)
     if(user != undefined){
       sessionStorage.setItem('user', JSON.stringify(user))
     }
@@ -150,10 +148,28 @@ export default {
     let userIndex = data.users.map(function(user) { return user.id }).indexOf(uUser.id);
     data.users[userIndex] = uUser
     setData(data)
-
-    sessionStorage.setItem('user', JSON.stringify(uUser))
+    if(JSON.parse(sessionStorage.getItem('user')).id == uUser.id){
+      sessionStorage.setItem('user', JSON.stringify(uUser))
+    }
   },
   isAdmin : user=>user.roles.indexOf('ADMIN') > -1,
-  isDRH : user=>user.roles.indexOf('DIRECTEUR_DES_RESSOURCES_HUMAINES') > -1
+  isDRH : user=>user.roles.indexOf('DIRECTEUR_DES_RESSOURCES_HUMAINES') > -1,
+  getRoles : ()=> roles,
+  createUser : user => {
+    let data = getData()
+    user.id = new Date().getTime()
+    data.users.push(user)
+    setData(data)
+  },
+  findUser : (firstName, lastName, pseudo, mail)=>{
+    let data = getData().users
+    let usersfind = { 
+      firstName : data.filter(u=>u.firstName.toUpperCase().includes(firstName.toUpperCase())) || [],
+      lastName : data.filter(u=>u.lastName.toUpperCase().includes(lastName.toUpperCase())) || [],
+      pseudo : data.filter(u=>u.pseudo.toUpperCase().includes(pseudo.toUpperCase())) || [],
+      mail : data.filter(u=>u.mail.toUpperCase().includes(mail.toUpperCase())) || []
+    }
+    return usersfind
+  }
 
 }
