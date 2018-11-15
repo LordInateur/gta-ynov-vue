@@ -66,6 +66,14 @@ let checkData = ()=> {
         contrats : [{
           dateDebut : "2018-11-08",
           dateFin : "2018-11-16",
+          horaire : [
+            [["09:30", "12h00"], ["13h30","18h00"]],
+            [["09:30", "12h00"], ["13h30","18h00"]],
+            [["09:30", "12h00"], ["13h30","18h00"]],
+            [["09:30", "12h00"], ["13h30","18h00"]],
+            [["09:30", "12h00"], ["13h30","18h00"]],
+            [],
+            []],
           demandes : []
         }]
       },{
@@ -170,6 +178,10 @@ export default {
       mail : data.filter(u=>u.mail.toUpperCase().includes(mail.toUpperCase())) || []
     }
     return usersfind
+  },
+  getCurrentContract : user => {
+    let contrats = user.contrats
+    /* TODO :) */
   }
 
 }

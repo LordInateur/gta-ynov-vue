@@ -1,29 +1,38 @@
 <template>
-  <div class="home">
+  <div class="dashboard">
+    <br>
+    <h1>Welcome to your dashboard {{user.pseudo}}</h1>
     <img alt="Vue logo" src="../assets/logo.png">
-    <h1>{{ }}</h1>
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+
 
 export default {
-  name: 'home',
+  name: 'dashboard',
   components: {
-    HelloWorld
   },
   created : function() {
     console.log("Home created")
     if(!this.$root.isLogged()){
       this.$router.push('login')
+    }else{
+      this.user = this.$root.getLoggedUser()
     }
   },
   mounted : function () {
   },
   updated : function (){
+  },
+  data : function(){
+    return {
+      user : {}
+    }
+  },
+  methods : {
+
   }
 };
 
