@@ -11,7 +11,9 @@
 -> page login OK, creation page profil.
 
 * day5 11_15 : Creation des methodes de gestion de donnée
+-> Finalisation de la page profil
 * day6 11_16 : Creation des tests ( et/ou rattrapage du retard planning)
+-> Finalisation de dashbord simplifié
 
 * day7 11_22 : Rendre le contenu des pages dynamique_1
 * day8 11_23 : Rendre le contenu des pages dynamique_2 + preparation d'un livrable

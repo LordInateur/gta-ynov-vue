@@ -64,8 +64,26 @@ let checkData = ()=> {
         mail : "admin@domain.com",
         roles : ['USER', 'TEAM_LEADER', 'DIRECTEUR_DES_RESSOURCES_HUMAINES', 'ADMIN'],
         contrats : [{
+          id : 0,
+          titre : "Contrat test pour user",
           dateDebut : "2018-11-08",
           dateFin : "2018-11-16",
+          nbHeureSemaine : 35,
+          horaire : [
+            [["09:30", "12h00"], ["13h30","18h00"]],
+            [["09:30", "12h00"], ["13h30","18h00"]],
+            [["09:30", "12h00"], ["13h30","18h00"]],
+            [["09:30", "12h00"], ["13h30","18h00"]],
+            [["09:30", "12h00"], ["13h30","18h00"]],
+            [],
+            []],
+          demandes : []
+        },{
+          id : 1,
+          titre : "Contrat 2",
+          dateDebut : "2018-11-19",
+          dateFin : "2018-11-30",
+          nbHeureSemaine : 35,
           horaire : [
             [["09:30", "12h00"], ["13h30","18h00"]],
             [["09:30", "12h00"], ["13h30","18h00"]],
@@ -179,9 +197,6 @@ export default {
     }
     return usersfind
   },
-  getCurrentContract : user => {
-    let contrats = user.contrats
-    /* TODO :) */
-  }
+  formatDate : date => date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate()
 
 }
