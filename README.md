@@ -47,7 +47,12 @@ DRH
 * Accéder au logs de l'application
 * Parametrer les motifs d'absence
 
+## Information E2E Testing :
 
+Identifiant par defaut :
+
+admin@domain.com/admin -> ADMIN, USER, DIRECTEUR_RESSOURCE_HUMAINE, TEAM_LEADER (Utilisateur pouvant accéder a toute les fonctionnalités)
+user@domain.com/user -> USER
 
 
 

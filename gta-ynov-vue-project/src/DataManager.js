@@ -111,7 +111,18 @@ let checkData = ()=> {
         mail : "user@domain.com",
         roles : ['USER'],
         contrats : [{
-          dateDebut : "2018/11/08",
+          id : 2,
+          titre : "Contrat 2",
+          nbHeureSemaine : 35,
+          horaire : [
+            [["09:30", "12h00"], ["13h30","18h00"]],
+            [["09:30", "12h00"], ["13h30","18h00"]],
+            [["09:30", "12h00"], ["13h30","18h00"]],
+            [["09:30", "12h00"], ["13h30","18h00"]],
+            [["09:30", "12h00"], ["13h30","18h00"]],
+            [],
+            []],
+          dateDebut : "2018-11-08",
           dateFin : "2018-11-16",
           demandes : [
           {
