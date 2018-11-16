@@ -2,32 +2,7 @@
   <div class="profil">
       <div class="row main">
         <div class="col-xl-4" v-if="canEditName">
-          <div class="main-login main-center">
-            <h1> Rechercher </h1>
-            <input class="form-control" v-model="recherche" type="text"  placeholder="firstName, lastName, pseudo, mail"/>
-            <br>
-
-            <div v-if="rechercheResult.firstName.length > 0">
-              <h3>Find by FirstName :</h3>
-              <div v-for="fUser in rechercheResult.firstName">{{fUser.firstName}} {{fUser.lastName}} ( {{fUser.mail}} ) <img class="imgLoadUser" v-on:click="loadUser(fUser)" src="https://static.thenounproject.com/png/370577-200.png"></div>
-            </div>
-
-            <div v-if="rechercheResult.lastName.length > 0">
-              <h3>Find by LastName :</h3>
-              <div v-for="fUser in rechercheResult.lastName">{{fUser.firstName}} {{fUser.lastName}} ( {{fUser.mail}} )</div>
-            </div>
-
-            <div v-if="rechercheResult.pseudo.length > 0">
-              <h3>Find by Pseudo :</h3>
-              <div v-for="fUser in rechercheResult.pseudo">{{fUser.firstName}} {{fUser.lastName}} ( {{fUser.mail}} )</div>
-            </div>
-
-            <div v-if="rechercheResult.mail.length > 0">
-              <h3>Find by Mail :</h3>
-              <div v-for="fUser in rechercheResult.mail">{{fUser.firstName}} {{fUser.lastName}} ( {{fUser.mail}} )</div>
-            </div>
-            
-          </div>
+          <SearchUser v-on:loadUser="loadUser"/>
         </div>
         <div v-bind:class="{'col-xl-8': canEditName, 'main-login main-center': !canEditName}">
           <div v-bind:class="{'main-login main-center': canEditName}">
@@ -160,11 +135,12 @@
 <script>
 // @ is an alias to /src
 import vSelect from 'vue-select'
-
+import SearchUser from '@/components/SearchUser.vue'
 export default {
   name: 'profil',
   components: {
-    vSelect
+    vSelect,
+    SearchUser
   },
   created : function() {
     console.log("profil created");
@@ -180,14 +156,7 @@ export default {
       formUser : {},
       canEditName : false,
       canCreateUser : false,
-      isAdmin : false,
-      recherche : "",
-      rechercheResult : {
-        firstName : [],
-        lastName : [],
-        pseudo : [],
-        mail : []
-      }
+      isAdmin : false
     }
   },
   methods : {
@@ -209,22 +178,7 @@ export default {
     }
   },
   computed : {},
-  watch : {
-    recherche : function (txt){
-      if(txt.length > 0){
-        console.log(txt)
-        this.rechercheResult = this.$root.findUser(txt, txt, txt, txt )
-        console.log(this.rechercheResult)
-      } else {
-        this.rechercheResult = {
-          firstName : [],
-          lastName : [],
-          pseudo : [],
-          mail : []
-        }
-      }
-    }
-  }
+  watch : {}
 };
 </script>
 
