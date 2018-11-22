@@ -5,44 +5,38 @@ Data Manager
 */
 
 let roles = ['USER', 'TEAM_LEADER', 'DIRECTEUR_DES_RESSOURCES_HUMAINES', 'ADMIN']
-let demandes = {
-  CONGE_PAYE : {
-    id : 'CONGE_PAYE',
-    title : 'Congé payé',
+let demandesStatus = ['EN_COURS', 'ACCEPTE']
+let demandes = [{
+    value : '1',
+    text : 'Congé payé',
     jourPayer : true,
-    dates : [
-      '2018-11-12'
-    ]
-  },
-  RECUPERATION : {
-    id : 'RECUPERATION',
-    title : 'Récupération',
+    status : 'EN_COURS',
+    date : '2018-01-01'
+  }, {
+    value : '2',
+    text : 'Récupération',
     jourPayer : true,
-    dates : [
-      '2018-11-13'
-    ]
-  },
-  AMENAGEMENT_HORAIRE : {
-    id : 'AMENAGEMENT_HORAIRE',
-    title : 'Aménagment d\'horaire',
+    status : 'EN_COURS',
+    date : '2018-01-01'
+  }, {
+    value : '3',
+    text : 'Aménagment d\'horaire',
     jourPayer : true,
-    dates : [
-      '2018-11-14'
-    ]
-  }, 
-  ABSENCE : {
-    id : 'ABSENCE',
-    title : 'Absence',
+    status : 'EN_COURS',
+    date : '2018-01-01'
+  }, {
+    value : '4',
+    text : 'Absence',
     jourPayer : false,
-    dates : [
-      '2018-11-15'
-    ]
+    status : 'EN_COURS',
+    date : '2018-01-01'
   }
-}
+]
 
 let copy = obj => JSON.parse(JSON.stringify(obj))
 let getData = ()=> JSON.parse(localStorage.getItem('data'))
 let setData = a => localStorage.setItem('data', JSON.stringify(a))
+let to2digit = a => (""+a).length < 2 ?  "0" + a : "" + a;
 
 let checkData = ()=> {
   if (getData() == null){
@@ -70,11 +64,11 @@ let checkData = ()=> {
           dateFin : "2018-11-16",
           nbHeureSemaine : 35,
           horaire : [
-            [["09:30", "12h00"], ["13h30","18h00"]],
-            [["09:30", "12h00"], ["13h30","18h00"]],
-            [["09:30", "12h00"], ["13h30","18h00"]],
-            [["09:30", "12h00"], ["13h30","18h00"]],
-            [["09:30", "12h00"], ["13h30","18h00"]],
+            [["09h30", "12h00"], ["13h30","18h00"]],
+            [["09h30", "12h00"], ["13h30","18h00"]],
+            [["09h30", "12h00"], ["13h30","18h00"]],
+            [["09h30", "12h00"], ["13h30","18h00"]],
+            [["09h30", "12h00"], ["13h30","18h00"]],
             [],
             []],
           demandes : []
@@ -85,11 +79,11 @@ let checkData = ()=> {
           dateFin : "2018-11-30",
           nbHeureSemaine : 35,
           horaire : [
-            [["09:30", "12h00"], ["13h30","18h00"]],
-            [["09:30", "12h00"], ["13h30","18h00"]],
-            [["09:30", "12h00"], ["13h30","18h00"]],
-            [["09:30", "12h00"], ["13h30","18h00"]],
-            [["09:30", "12h00"], ["13h30","18h00"]],
+            [["08h30", "12h00"], ["13h30","17h00"]],
+            [["08h30", "12h00"], ["13h30","17h00"]],
+            [["08h30", "12h00"], ["13h30","17h00"]],
+            [["08h30", "12h00"], ["13h30","17h00"]],
+            [["08h30", "12h00"], ["13h30","17h00"]],
             [],
             []],
           demandes : []
@@ -115,44 +109,40 @@ let checkData = ()=> {
           titre : "Contrat 2",
           nbHeureSemaine : 35,
           horaire : [
-            [["09:30", "12h00"], ["13h30","18h00"]],
-            [["09:30", "12h00"], ["13h30","18h00"]],
-            [["09:30", "12h00"], ["13h30","18h00"]],
-            [["09:30", "12h00"], ["13h30","18h00"]],
-            [["09:30", "12h00"], ["13h30","18h00"]],
+            [["09h30", "12h00"], ["13h30","18h00"]],
+            [["09h30", "12h00"], ["13h30","18h00"]],
+            [["09h30", "12h00"], ["13h30","18h00"]],
+            [["09h30", "12h00"], ["13h30","18h00"]],
+            [["09h30", "12h00"], ["13h30","18h00"]],
             [],
             []],
           dateDebut : "2018-11-08",
           dateFin : "2018-11-16",
           demandes : [
           {
-            id : 'CONGE_PAYE',
-            title : 'Congé payé',
+            value : '1',
+            text : 'Congé payé',
             jourPayer : true,
-            dates : [
-              '2018-11-12'
-            ]
+            status : 'ACCEPTE',
+            date : '2018-11-12'
           },{
-            id : 'RECUPERATION',
-            title : 'Récupération',
+            value : '2',
+            text : 'Récupération',
             jourPayer : true,
-            dates : [
-              '2018-11-13'
-            ]
+            status : 'ACCEPTE',
+            date : '2018-11-13'
           },{
-            id : 'AMENAGEMENT_HORAIRE',
-            title : 'Aménagment d\'horaire',
+            value : '3',
+            text : 'Aménagment d\'horaire',
             jourPayer : true,
-            dates : [
-              '2018-11-14'
-            ]
+            status : 'ACCEPTE',
+            date : '2018-11-14'
           },{
-            id : 'ABSENCE',
-            title : 'Absence',
+            value : '4',
+            text : 'Absence',
             jourPayer : false,
-            dates : [
-              '2018-11-15'
-            ]
+            status : 'ACCEPTE',
+            date : '2018-11-15'
           }]
         }]
       }]
@@ -208,6 +198,13 @@ export default {
     }
     return usersfind
   },
-  formatDate : date => date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate()
+  getUser : userId => getData().users.find(u=>u.id == userId),
+  formatDate : date => date.getFullYear() + '-' + to2digit(date.getMonth()+1) + '-' + to2digit(date.getDate()),
+  getDefaultDemande : () => demandes,
+  saveDemande : (userId, contratId, demande) => {
+    let data = getData()
+    data.users.find(u=>u.id == userId).contrats.find(c=>c.id = contratId).demandes.push(demande)
+    setData(data)
+  }
 
 }
