@@ -16,6 +16,7 @@
 -> Finalisation de dashbord simplifié
 
 * day7 11_22 : Rendre le contenu des pages dynamique_1
+-> Creer la page planning
 * day8 11_23 : Rendre le contenu des pages dynamique_2 + preparation d'un livrable
 
 * day9 11_29 : Optimisation du code + preparation d'un livrable

@@ -10,6 +10,7 @@
 
         <b-navbar-nav v-if="this.$root.isLoggin">
           <b-nav-item href="#" v-on:click="resetData()" v-if="isAdmin()">Reset Data</b-nav-item>
+          <b-nav-item href="#" to="/planning" v-if="this.$root.isLoggin">Planning</b-nav-item>
           <b-nav-item href="#">Link</b-nav-item>
           <b-nav-item href="#" disabled>Disabled</b-nav-item>
         </b-navbar-nav>

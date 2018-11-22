@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Dashboard from './views/Dashboard.vue'
 import Login from './views/Login.vue'
 import Profil from './views/Profil.vue'
+import Planning from './views/Planning.vue'
 
 Vue.use(Router)
 
@@ -17,6 +18,11 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/planning',
+      name: 'planning',
+      component: Planning
     },
     {
       path: '/profil',
