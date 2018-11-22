@@ -50,6 +50,8 @@ DRH
 
 ## Information E2E Testing :
 
+Deployé sur https://lordinateur.github.io/
+
 Identifiant par defaut :
 
 admin@domain.com/admin -> ADMIN, USER, DIRECTEUR_RESSOURCE_HUMAINE, TEAM_LEADER (Utilisateur pouvant accéder a toute les fonctionnalités)
