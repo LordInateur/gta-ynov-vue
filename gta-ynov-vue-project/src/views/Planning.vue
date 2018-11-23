@@ -69,23 +69,28 @@ export default {
     },
     acceptDemande : function(userId, contractId, demandeId){
       this.$root.acceptDemande(userId, contractId, demandeId)
+      this.user = this.$root.getUser(this.user.id)
       this.refreshDemandeList()
     },
     refusDemande : function(userId, contractId, demandeId){
       this.$root.refusDemande(userId, contractId, demandeId)
+      this.user = this.$root.getUser(this.user.id)
       this.refreshDemandeList()
     },
     refreshDemandeList : function (){
       let loggedUser = this.$root.getLoggedUser()
-      let tmpDemandes = this.$root.getCurrentContract(loggedUser).demandes.map(d=>
+      this.demandesList = this.$root.getCurrentContract(loggedUser).demandes.map(d=>
         {
           d.user = "Moi"
           d.userId = loggedUser.id
           d.contractId = this.$root.getCurrentContract(loggedUser).id
           return d
         })
-      this.demandesList = tmpDemandes.concat(this.$root.getYourTeamsDemandes(loggedUser.teams, loggedUser.id))
-            .sort().reverse()
+      if(this.canAccept){
+        this.demandesList = this.demandesList.concat(this.$root.getYourTeamsDemandes(loggedUser.teams, loggedUser.id))
+      }
+      this.demandesList = this.demandesList.sort((a,b)=> a.date < b.date ? 1 : -1 )
+      
     }
   },
   computed : {

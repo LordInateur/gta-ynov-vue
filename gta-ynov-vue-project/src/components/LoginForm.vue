@@ -12,7 +12,7 @@
           <h1>Gestion des Temps et Activitées</h1>
           <div v-if="hadLoginError">
             <div class="text-danger">/!\ ------ mail/password don't match ------ /!\</div>
-            <div class="text-danger">use admin/admin to get some fun ;)</div>
+            <div class="text-danger">use admin@domain.com/admin to get some fun ;)</div>
           </div>
           
         </div>

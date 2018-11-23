@@ -18,6 +18,8 @@
 * day7 11_22 : Rendre le contenu des pages dynamique_1
 -> Creer la page planning
 * day8 11_23 : Rendre le contenu des pages dynamique_2 + preparation d'un livrable
+-> depolyer le serveur
+-> systeme de demande / validation oké
 
 * day9 11_29 : Optimisation du code + preparation d'un livrable
 * day0 11_30 : Champagne ou rush de derniere minute

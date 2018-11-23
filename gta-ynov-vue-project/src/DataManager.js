@@ -42,7 +42,9 @@ let copy = obj => JSON.parse(JSON.stringify(obj))
 let getData = ()=> JSON.parse(localStorage.getItem('data'))
 let setData = a => localStorage.setItem('data', JSON.stringify(a))
 let to2digit = a => (""+a).length < 2 ?  "0" + a : "" + a;
-let backFormatDate = date => date.getFullYear() + '-' + to2digit(date.getMonth()+1) + '-' + to2digit(date.getDate());
+let backFormatDate = date => date.getFullYear() + '-' + to2digit(date.getMonth()+1) + '-' + to2digit(date.getDate())
+let reloadSessionUser = () => sessionStorage.setItem('user', JSON.stringify(getData().users.find(u=>u.id==JSON.parse(sessionStorage.getItem('user')).id)))
+
 let checkData = ()=> {
   if (getData() == null){
     setData({
@@ -121,7 +123,7 @@ let checkData = ()=> {
         teams : ['Team 1'],
         contrats : [{
           id : 2,
-          titre : "Contrat 2",
+          titre : "Contrat 1",
           nbHeureSemaine : 35,
           horaire : [
             [["09h30", "12h00"], ["13h30","18h00"]],
@@ -281,10 +283,12 @@ export default {
     let data = getData()
     data.users.find(u=>u.id == userId).contrats.find(c=>c.id == contractId).demandes.find(d=>d.id == demandeId).status = 'ACCEPTE'
     setData(data)
+    reloadSessionUser()
   },
   refusDemande : function(userId, contractId, demandeId){
     let data = getData()
     data.users.find(u=>u.id == userId).contrats.find(c=>c.id == contractId).demandes.find(d=>d.id == demandeId).status = 'REFUSE'
     setData(data)
+    reloadSessionUser()
   }
 }

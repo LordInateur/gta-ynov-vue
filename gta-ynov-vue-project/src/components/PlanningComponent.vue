@@ -11,7 +11,7 @@
     </div>
     <div class="row">
       <div  class="col-1 align-self-center">
-        <input class="switchSemaineBouton" v-on:click="previousWeek()" type="button" name="" value="<" :disabled="!canClickLeft">
+        <input class="switchSemaineBouton" v-on:click="previousWeek()" type="button" name="" value="<X" :disabled="!canClickLeft">
       </div>
       <div class="col-10">
         <!-- Debut calendrié -->
@@ -21,7 +21,7 @@
             <div class="cel title" v-on:click="clickCol(index)" v-if="getCelDate(index) != mondayDate"> {{ getCelDate(index) }} </div>
             <input class="title" type="date" v-model="mondayDate" name="" v-if="getCelDate(index) == mondayDate">
 
-            <div class="cel" :class="{'active' : cel.active }" v-for="cel in dayToArray(day, index)" v-on:click="clickCel(cel)">{{cel.horaire}}</div>
+            <div class="cel" :class="{'active' : cel.active, 'demande' : cel.demande }" v-for="cel in dayToArray(day, index)" v-on:click="clickCel(cel)">{{cel.horaire}}</div>
 
           </div>
         </div>
@@ -31,7 +31,7 @@
         <!-- Fin calendrié -->
       </div>
       <div class="col-1 align-self-center">  
-        <input class="switchSemaineBouton" v-on:click="nextWeek()" type="button" name="" value=">" :disabled="!canClickRight"> 
+        <input class="switchSemaineBouton" v-on:click="nextWeek()" type="button" name="" value="X>" :disabled="!canClickRight"> 
       </div>
     </div>
 
@@ -82,13 +82,17 @@ export default {
 
       for(let hh = 7 ; hh < 22 ; hh ++ ){
         for(let mdh = 0 ; mdh < 2 ; mdh ++){
-          let cel = {active : false, horaire: hh + mm[mdh], day: this.getCelDate(index)}
+          let cel = {demande : false, active : false, horaire: hh + mm[mdh], day: this.getCelDate(index)}
 
           if (day.length > 0){
 
             if(this.selectedContract.dateDebut <= cel.day && cel.day <= this.selectedContract.dateFin){
-              if(this.isDateBetwin(cel.horaire, day[0][0], day[0][1]) || this.isDateBetwin(cel.horaire, day[1][0], day[1][1]) ){
-                cel.active = true
+              if(this.isDateBetwin(cel.horaire, day[0][0], day[0][1]) || this.isDateBetwin(cel.horaire, day[1][0], day[1][1]) ){ 
+                if(this.selectedContract.demandes.find(d=>d.date == cel.day && d.status != 'REFUSE')){
+                  cel.demande = true;
+                }else {
+                  cel.active = true
+                }
               }
             }
           }
@@ -228,6 +232,13 @@ input.title {
 }
 .cel.active:hover {
   background-color: #88F
+}
+
+.cel.demande {
+  background-color: orange
+}
+.cel.demande:hover {
+  background-color: darkorange
 }
 
 </style>
