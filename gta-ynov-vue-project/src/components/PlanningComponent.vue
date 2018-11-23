@@ -11,7 +11,7 @@
     </div>
     <div class="row">
       <div  class="col-1 align-self-center">
-        <input class="switchSemaineBouton" v-on:click="previousWeek()" type="button" name="" value="<">
+        <input class="switchSemaineBouton" v-on:click="previousWeek()" type="button" name="" value="<" :disabled="!canClickLeft">
       </div>
       <div class="col-10">
         <!-- Debut calendrié -->
@@ -31,7 +31,7 @@
         <!-- Fin calendrié -->
       </div>
       <div class="col-1 align-self-center">  
-        <input class="switchSemaineBouton" v-on:click="nextWeek()" type="button" name="" value=">"> 
+        <input class="switchSemaineBouton" v-on:click="nextWeek()" type="button" name="" value=">" :disabled="!canClickRight"> 
       </div>
     </div>
 
@@ -39,6 +39,7 @@
     <b-modal ref="myModalRef" hide-footer title="Creation de demande">
       <div class="d-block text-center">
         <h3>Entrer les informations nécessaires : </h3>
+        <h4>Contrat selectionné : {{(this.user.contrats.find(c=>c.id == selected) || {titre : 'AUCUN CONTRAT SELECTIONNE'}).titre}}</h4>
         <b-form-select v-model="demandeFormValue" :options="this.$root.getDefaultDemande()" class="mb-3" />
 
         <div>
@@ -58,7 +59,7 @@ export default {
   name : "PlanningComponent",
   created : function() {
     console.log("PlanningComponent created")
-    this.selected = this.getCurrentContract(this.user).id
+    this.selected = this.$root.getCurrentContract(this.user).id
     this.user.contrats.sort((a,b)=>a.dateDebut<=b.dateDebut)
     this.mondayDate = this.$root.formatDate(new Date(new Date().getTime() - (new Date().getDay()-1) * 24 * 60 * 60 * 1000 ))
   },
@@ -97,9 +98,6 @@ export default {
       
       return dayArray
     },
-    getCurrentContract : function(user) {
-      return user.contrats.find(c => c.dateDebut <= this.$root.formatDate(new Date()) && this.$root.formatDate(new Date()) <= c.dateFin ) || {id : -1}
-    },
     updateUser : function(user){
       this.user = user
     },
@@ -125,7 +123,7 @@ export default {
       this.mondayDate = this.$root.formatDate(new Date(new Date(this.mondayDate).getTime() + 7 * 24 * 60 * 60 * 1000))
     },
     saveDemande : function(){
-      this.$root.saveDemande(this.user.id, this.selectedContract.id, this.demandeForm)
+      this.$root.saveDemande(this.user.id, this.selected, this.demandeForm)
       this.$refs.myModalRef.hide()
       this.$emit('loadUser', this.$root.getUser(this.user.id))
     }
@@ -154,12 +152,18 @@ export default {
     selectedContract : function(){
       return this.user.contrats.find(c=>c.id == this.selected) || { horaire:[[],[],[],[],[],[],[]] }
     },
+    canClickLeft : function(){
+      return new Date(this.selectedContract.dateDebut) < new Date(this.mondayDate)
+    },
+    canClickRight : function(){
+      return new Date(new Date(this.mondayDate).getTime() + 7 * 24 * 60 * 60 * 1000 ) < new Date(this.selectedContract.dateFin)
+    }
 
   },
   watch : {
     user : {
       handler : function (newUser){
-        this.selected = this.getCurrentContract(this.user).id
+        this.selected = this.$root.getCurrentContract(this.user).id
       }
     },
     mondayDate : {

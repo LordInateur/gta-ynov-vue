@@ -42,6 +42,17 @@
               </div>
               
               <div class="form-group">
+                <label for="name" class="cols-sm-2 control-label">Team</label>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                    <v-select id="roles" class="form-control" multiple :options="this.$root.getTeams()" v-model="formUser.teams" :disabled="!canEditName" taggable></v-select>
+                  </div>
+                  
+                </div>
+              </div>
+              
+              <div class="form-group">
                 <label for="name" class="cols-sm-2 control-label">Pseudo</label>
                 <div class="cols-sm-10">
                   <div class="input-group">
