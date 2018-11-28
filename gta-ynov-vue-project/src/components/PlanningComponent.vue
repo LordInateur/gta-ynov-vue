@@ -14,7 +14,7 @@
     Clicker sur une demande permet de la modifier
 
  -->
- 
+
  <template>
   <div id="PlanningComponent">
     <div>
@@ -27,6 +27,7 @@
       </b-form-group>
     </div>
     <div class="row">
+      <!-- Bouton semaine precedente -->
       <div  class="col-1 align-self-center">
         <input class="switchSemaineBouton" v-on:click="previousWeek()" type="button" name="" value="<X" :disabled="!canClickLeft">
       </div>
@@ -47,6 +48,7 @@
         </div>
         <!-- Fin calendrié -->
       </div>
+      <!-- Bouton semaine suivante -->
       <div class="col-1 align-self-center">  
         <input class="switchSemaineBouton" v-on:click="nextWeek()" type="button" name="" value="X>" :disabled="!canClickRight"> 
       </div>
@@ -80,31 +82,32 @@ export default {
     this.user.contrats.sort((a,b)=>a.dateDebut<=b.dateDebut)
     this.mondayDate = this.$root.formatDate(new Date(new Date().getTime() - (new Date().getDay()-1) * 24 * 60 * 60 * 1000 ))
   },
-  mounted : function(){
-
-  },
   methods : {
     isDateBetwin(date, before, after){
-
       let d_date = Number(date.split('h')[0]) * 60 + Number(date.split('h')[1])
       let d_before = Number(before.split('h')[0]) * 60 + Number(before.split('h')[1])
       let d_after = Number(after.split('h')[0]) * 60 + Number(after.split('h')[1])
       return d_before <= d_date && d_date < d_after
     },
     dayToArray : function (day, index){
-      // Une journée ne peux pas commencer avant 7h et finir après 22h
+      // Fonction qui transforme les infos du contrat pour une journée en une liste de demi-heure
 
       let mm = ["h00", "h30"];
       let dayArray = []
 
+      // On passe chaque demi-heure de 7h à 22h en revu
       for(let hh = 7 ; hh < 22 ; hh ++ ){
         for(let mdh = 0 ; mdh < 2 ; mdh ++){
+          // cel : Une zone d'une demi-heure dans le planning
           let cel = {demande : false, active : false, horaire: hh + mm[mdh], day: this.getCelDate(index)}
 
+          // Si la journée est une journée travaillé
           if (day.length > 0){
-
+            // si le jour est censé être travaillé
             if(this.selectedContract.dateDebut <= cel.day && cel.day <= this.selectedContract.dateFin){
+              // Si la demieur est censé être travaillé
               if(this.isDateBetwin(cel.horaire, day[0][0], day[0][1]) || this.isDateBetwin(cel.horaire, day[1][0], day[1][1]) ){ 
+                // Si il y a une demande pour la journée
                 if(this.selectedContract.demandes.find(d=>d.date == cel.day && d.status != 'REFUSE')){
                   cel.demande = true;
                 }else {
@@ -120,6 +123,7 @@ export default {
       return dayArray
     },
     updateUser : function(user){
+      // Change l'utilisateur affiché sur le tableau
       this.user = user
     },
     getCelDate : function(index){
@@ -129,13 +133,11 @@ export default {
       this.selectedCel = cel
       this.demandeFormValue = '-1'
       this.$refs.myModalRef.show()
-      //alert(cel.day + ' - ' + cel.horaire + ' - ' + cel.active)
     },
     clickCol : function(index){
       this.selectedCel = {day : this.getCelDate(index) }
       this.demandeFormValue = '-1'
       this.$refs.myModalRef.show()
-      //alert(this.getCelDate(index))
     },
     previousWeek : function(){
       this.mondayDate = this.$root.formatDate(new Date(new Date(this.mondayDate).getTime() - 7 * 24 * 60 * 60 * 1000))
@@ -146,28 +148,30 @@ export default {
     saveDemande : function(){
       this.$root.saveDemande(this.user.id, this.selected, this.demandeForm)
       this.$refs.myModalRef.hide()
+      // loadUser : fonction du parent qui change l'utilisateur affiché
       this.$emit('loadUser', this.$root.getUser(this.user.id))
     }
   },
   data : function (){
     return {
-      selected : "",
-      mondayDate : "2018-11-19",
-      demandeFormValue : '-1',
-      demandeForm : {
+      selected : "", // l'identifiant du contrat selectionner dans les radios boutons
+      mondayDate : "2018-11-19", // la date du debut de la semaine a afficher dans le planning
+      demandeFormValue : '-1', // Pour le formulaire de demande : le type de la demande
+      demandeForm : { // Une demande apr defaut
             value : '-1',
             text : 'Undefined',
             jourPayer : false,
             status : 'EN_COURS',
             date : '2018-01-01'
           },
-      selectedCel : {
+      selectedCel : { // mis a jour lors du click sur une cellule pour garder l'info jusqu'au prochain click
         day : this.$root.formatDate(new Date())
       }
     }
   },
   computed : {
     options : function (){
+      // la liste des contrats pour les radios buttons
       return this.user.contrats.map(c=> {return{text : c.titre, value : c.id}})
     },
     selectedContract : function(){
@@ -184,11 +188,13 @@ export default {
   watch : {
     user : {
       handler : function (newUser){
+        // rafraichit l'utilisateur lors de la creation / validation d'une demande
         this.selected = this.$root.getCurrentContract(this.user).id
       }
     },
     mondayDate : {
       handler : function (newMondayDate){
+        // s'assure que la date selectionner est bien un lundi. Sinon prend le lundi précedent
         let newDateDay = new Date(newMondayDate).getDay()
         if( newDateDay != 1 ){
           this.mondayDate = this.$root.formatDate(new Date(new Date(newMondayDate).getTime() - (newDateDay-1) * 24 * 60 * 60 * 1000 ))
@@ -197,17 +203,16 @@ export default {
     },
     demandeFormValue : {
       handler : function (newDemandeFormValue){
+        // Charge les information de la demande lors que l'utilisateur choisie le type de la demande qu'il veut faire
         this.demandeForm = this.$root.getDefaultDemande().find(dmd=>dmd.value == newDemandeFormValue) || { date : ''}
         this.demandeForm.date = this.selectedCel.day
       }
     }
   },
   props: {
-    user: Object
+    user: Object // l'utilisateur afficher sur le planning
   }
 };
-
-
 
 </script>
 

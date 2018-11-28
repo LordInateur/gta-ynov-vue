@@ -169,7 +169,6 @@ export default {
     SearchUser
   },
   created : function() {
-    console.log("profil created");
     this.user = this.$root.getLoggedUser()
     this.formUser = this.$root.getLoggedUser()
     this.canEditName = this.$root.isDRH(this.user) ||  this.$root.isAdmin(this.user)
@@ -188,17 +187,16 @@ export default {
   methods : {
     doSubmit : function (){
       this.$root.saveUser(this.formUser)
-      //this.user = this.$root.getLoggedUser()
       alert("Personal Data Saved")
     },
     createUser : function (){
       if(this.formUser.mail != this.formUser.mail){
         this.$root.createUser(this.formUser)
-        //this.user = this.$root.getLoggedUser()
         alert("User Created")
       }
     },
     loadUser : function(user){
+      // Change l'utilisateur affiché dans le formulaire
       this.user = user
       this.formUser = user
     }

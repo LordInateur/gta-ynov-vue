@@ -69,8 +69,8 @@ export default {
   components: {
   },
   created : function() {
-    console.log("Home created")
     if(!this.$root.isLogged()){
+      // si utilisateur accède a la page sans être connecté : redirection vers login
       this.$router.push('login')
     }else{
       this.user = this.$root.getLoggedUser()
@@ -95,6 +95,7 @@ export default {
   },
   computed : {
     options : function (){
+      // la liste des contrat pour les radios boutons
       return this.user.contrats.map(c=> {return{text : c.titre, value : c.id}})
     },
     selectedContract : function(){

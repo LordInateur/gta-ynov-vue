@@ -79,28 +79,26 @@
     },
     computed : {
       isLogin : function(){
-        console.log("NavBar isLogin computed : " + this.$root.isLogged())
         return this.$root.isLogged();
       } 
     },
     created : function(){
-      console.log("NavBar created")
       this.$root.isLoggin = this.$root.isLogged()
     },
     methods : {
       logout : function (){
-        console.log("logout")
+        console.log("user logout")
         this.$root.logout()
-        //this.isNotLogin = this.$root.isLogged()
         this.$root.isLoggin = false
         this.$router.push('login')
       },
       resetData : function (){
         this.$root.resetData()
         alert("Data have been reseted")
+        this.$router.push('login')
       },
       isAdmin : function(){
-        return this.$root.getLoggedUser().roles.indexOf('ADMIN') > -1
+        return this.$root.isAdmin(this.$root.getLoggedUser())
       }
     },
     props : {}

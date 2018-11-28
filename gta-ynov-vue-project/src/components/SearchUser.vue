@@ -51,7 +51,7 @@ export default {
   },
   data : function(){
     return {
-      recherche : "",
+      recherche : "", // le champ text
       rechercheResult : {
         firstName : [],
         lastName : [],
@@ -62,11 +62,13 @@ export default {
   },
   methods : {
     loadUser : function(user){
+      // envoit au parent l'utilisateur selectionner
       this.$emit('loadUser', user)
     }
   },
   watch : {
     recherche : function (txt){
+      // recherche un utilisateur dès que le champ recherche est modifié
       if(txt.length > 0){
         console.log(txt)
         this.rechercheResult = this.$root.findUser(txt, txt, txt, txt )
@@ -84,7 +86,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
 .main{

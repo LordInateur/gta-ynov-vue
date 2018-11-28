@@ -75,12 +75,12 @@ export default {
     return {
       canEditName : false,
       user : {},
-      demandesList : []
+      demandesList : [] // la liste des demandes de l'utilisateur connecté
     }
   },
   methods : {
     loadUser : function(user){
-      //alert("loadUser")
+      // change l'utilisateur affiché
       this.user = user
     },
     acceptDemande : function(userId, contractId, demandeId){
@@ -95,6 +95,7 @@ export default {
     },
     refreshDemandeList : function (){
       let loggedUser = this.$root.getLoggedUser()
+      // charge les demandes de l'utilisateur
       this.demandesList = this.$root.getCurrentContract(loggedUser).demandes.map(d=>
         {
           d.user = "Moi"
@@ -102,6 +103,7 @@ export default {
           d.contractId = this.$root.getCurrentContract(loggedUser).id
           return d
         })
+      // [TEAM_LEADER, et+] ajout les demandes des membre de la même équipe
       if(this.canAccept){
         this.demandesList = this.demandesList.concat(this.$root.getYourTeamsDemandes(loggedUser.teams, loggedUser.id))
       }

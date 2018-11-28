@@ -14,7 +14,7 @@
     Afficher un message d'erreur en fonction du retour serveur 
 
  -->
- 
+
 <template>
   <div id="LoginForm">
     <!-- <router-link to="/">Home</router-link> | -->
@@ -40,9 +40,9 @@
           <input type="submit" class="fadeIn fourth" value="Log In">
         </form>
 
-        <!-- Remind Passowrd -->
+        <!-- Link to about page -->
         <div id="formFooter">
-          <router-link to="/about" class="underlineHover" >Go to the Site</router-link>
+          <router-link to="/about" class="underlineHover" >What's that website</router-link>
         </div>
 
       </div>
@@ -59,13 +59,12 @@
     },
     methods : {
       doSubmit : function (event) {
-        console.log(this.login + "/" + this.password)
+        // console.log(this.login + "/" + this.password)
         let user = this.$root.login(this.login, this.password)
         if(user == undefined){
           this.hadLoginError = true
         }else{
-          console.log("user logged")
-        //zconsole.log(user)
+          console.log(user.pseudo + " logged")
           this.$root.user = user
           this.$root.isLoggin = true
           this.$router.push('/')
