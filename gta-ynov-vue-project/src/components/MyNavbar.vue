@@ -1,3 +1,22 @@
+<!-- MyNavbar.vue
+
+  ** Autheur : Matthieu Fournier **
+
+  Description :
+    Ce composant est la barre de navigation de l'application
+
+  Fonctionnalités :
+    Permet de naviger entre les différentes page de l'application
+    Masque les liens vers les fonctionnalités dont l'utilisateur n'a pas le rôle requis
+
+  TODO : 
+    Trouver quoi faire avec le champ de recherche
+    Enlever les champs par defaut non utiliser
+    Faire fonctionner le choix du language 
+
+ -->
+ 
+
 <template>
   <div id="MyNavbar">
     <b-navbar toggleable="md" type="dark" variant="info">

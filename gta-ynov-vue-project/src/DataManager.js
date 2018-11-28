@@ -1,6 +1,15 @@
-/*  
+/*  DataManager.js
 
-Data Manager
+  ** Autheur : Matthieu Fournier **
+
+  Description :
+    Ce script a pour but de rassembler les fonctions global ( principalement a destination du serveur )
+
+  Fonctionnalités :
+    Géré la persistance des donnée en local et les appels serveur
+
+  TODO : 
+    Un vrai serveur
 
 */
 

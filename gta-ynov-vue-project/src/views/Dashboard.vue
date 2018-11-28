@@ -1,3 +1,18 @@
+<!-- Dashboard.vue
+
+  ** Autheur : Matthieu Fournier **
+
+  Description :
+    Cette vue est la page d'acceuil ou la personne va pouvoir voir différentes information relative à son contrat
+
+  Fonctionnalités :
+    Afficher des informations de différent contrat
+
+  TODO : 
+    Ajouter des informations
+
+ -->
+ 
 <template>
   <div class="dashboard">
     <br>

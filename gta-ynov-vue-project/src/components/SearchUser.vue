@@ -1,3 +1,18 @@
+<!-- SearchUser.vue
+
+  ** Autheur : Matthieu Fournier **
+
+  Description :
+    Ce composant est le formulaire de recherche utilisateur.
+
+  Fonctionnalités :
+    Permet de trouver un utilisateur par : (pseudo / mail / prenom / nom )
+
+  TODO : 
+    Ammeliorer l'affichage des réponses
+
+ -->
+
 <template>
   <div id="SearchUser">
     <div class="main-login main-center">

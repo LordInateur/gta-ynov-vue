@@ -1,3 +1,20 @@
+<!-- LoginForm.vue
+
+  ** Autheur : Matthieu Fournier **
+
+  Description :
+    Ce composant est le formulaire de login.
+
+  Fonctionnalités :
+    Permet la connexion via champ mail et mot de passe
+    Si la connexion reussi redirige vers la page d'acceuil ( '/' ) 
+    Si la connexion echoue, affiche message par defaut.
+
+  TODO : 
+    Afficher un message d'erreur en fonction du retour serveur 
+
+ -->
+ 
 <template>
   <div id="LoginForm">
     <!-- <router-link to="/">Home</router-link> | -->

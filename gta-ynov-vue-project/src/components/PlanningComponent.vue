@@ -1,4 +1,21 @@
-<template>
+<!-- PlanningComposant.vue
+
+  ** Autheur : Matthieu Fournier **
+
+  Description :
+    Ce composant est un object planning/clendrier.
+
+  Fonctionnalités :
+    Afficher un planning
+    Modifier l'affichage d'une zone en fonction d'une condition ( si demande )
+
+  TODO : 
+    Pouvoir faire ressortir graphiquemennt les différent type de demande
+    Clicker sur une demande permet de la modifier
+
+ -->
+ 
+ <template>
   <div id="PlanningComponent">
     <div>
       <b-form-group >

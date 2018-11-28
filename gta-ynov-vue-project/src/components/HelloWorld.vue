@@ -1,3 +1,4 @@
+<!-- Page par defaut gardé a titre d'exemple -->
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>

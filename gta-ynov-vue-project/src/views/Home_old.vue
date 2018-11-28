@@ -1,4 +1,20 @@
 <!-- 
+<... Home_old.vue
+
+  ** Autheur : Vue cli **
+
+  Description :
+    Page d'acceuil générer par defaut par l'application. Garder a des fin d'exemple
+
+  Fonctionnalités :
+    NONE
+
+  TODO : 
+    A supprimer
+
+ -->
+ 
+
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">

@@ -1,4 +1,20 @@
-<template>
+<!-- Planning.vue
+
+  ** Autheur : Matthieu Fournier **
+
+  Description :
+    Cette vue est la page où l'utilisateur va pouvoir visualier son planning
+
+  Fonctionnalités :
+    Pouvoir choisir le contrat a visualiser
+    Pouvoir poser des demandes
+    [ADMIN / TEAM_LEADER / DRH] Pouvoir valider des demandes
+
+  TODO : 
+    Ajouter un footer
+
+ -->
+ <template>
   <div class="planning">
     <div id="planningContainer" class="row main">
       <div class="col-xl-4" v-if="canEditName">

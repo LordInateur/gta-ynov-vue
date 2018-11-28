@@ -1,4 +1,19 @@
-<template>
+<!-- Dashboard.vue
+
+  ** Autheur : Matthieu Fournier **
+
+  Description :
+    Cette vue est la page Profil
+
+  Fonctionnalités :
+    Afficher et editer son profil.
+    [role] En fonction du rôle, pouvoir modifier certaine donnée.
+
+  TODO : 
+    Pouvoir selectionner/créer/editer un contrat
+
+ -->
+ <template>
   <div class="profil">
       <div class="row main">
         <div class="col-xl-4" v-if="canEditName">
